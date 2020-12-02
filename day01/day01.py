@@ -1,23 +1,19 @@
+from itertools import combinations
 import pandas as pd
+import numpy as np
 
-data = pd.read_csv("data.txt").iloc[:, 0].values
 
-solutions = set()
-for first_value in data:
-    for second_value in data:
+def print_prod_of_entries_that_sum_to_num(data: list, iterations: int, num: int = 2020):
 
-        sum = first_value + second_value
-        if first_value + second_value == 2020:
-            solutions.add(first_value * second_value)
-print("first solution", solutions)
+    all_combinations = combinations(data, iterations)
+    for combination in all_combinations:
+        if sum(combination) == num:
+            product = np.prod(combination)
+            print(iterations, product)
+            break
 
-solutions = set()
-for first_value in data:
-    for second_value in data:
-        for third_value in data:
-            sum = first_value + second_value + third_value
 
-            if sum == 2020:
-                solutions.add(first_value * second_value * third_value)
-print("second solution", solutions)
-print("DONE")
+if __name__ == "__main__":
+    data = pd.read_csv("data.txt").iloc[:, 0].values
+    print_prod_of_entries_that_sum_to_num(data, 2, 2020)
+    print_prod_of_entries_that_sum_to_num(data, 3, 2020)
