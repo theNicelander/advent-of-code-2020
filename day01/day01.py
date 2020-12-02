@@ -1,10 +1,10 @@
 import pandas as pd
 
-df = pd.read_csv("data.txt").iloc[:,0].values
+data = pd.read_csv("data.txt").iloc[:, 0].values
 
 solutions = set()
-for first_value in df:
-    for second_value in df:
+for first_value in data:
+    for second_value in data:
 
         sum = first_value + second_value
         if first_value + second_value == 2020:
@@ -12,9 +12,9 @@ for first_value in df:
 print("first solution", solutions)
 
 solutions = set()
-for first_value in df:
-    for second_value in df:
-        for third_value in df:
+for first_value in data:
+    for second_value in data:
+        for third_value in data:
             sum = first_value + second_value + third_value
 
             if sum == 2020:
