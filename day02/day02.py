@@ -25,9 +25,9 @@ def policy_1(df):
     return df
 
 
-def print_solution_1(df):
-    valid_counts = df["valid_1"].value_counts()[True]
-    print(f"Solution 1: {valid_counts}")
+def print_solution(df, solution:int):
+    valid_counts = df[f"valid_{solution}"].value_counts()[True]
+    print(f"Solution {solution}: {valid_counts}")
     return df
 
 
@@ -48,12 +48,6 @@ def policy_2(df):
     return df
 
 
-def print_solution_2(df):
-    valid_counts = df["valid_2"].value_counts()[True]
-    print(f"Solution 2: {valid_counts}")
-    return df
-
-
 def print_df_head(df):
     print()
     print(df.head().iloc[:, 0:5])
@@ -67,8 +61,8 @@ if __name__ == "__main__":
     df = (
         df.pipe(count_char_occurrences)
         .pipe(policy_1)
-        .pipe(print_solution_1)
+        .pipe(print_solution, solution=1)
         .pipe(policy_2)
-        .pipe(print_solution_2)
+        .pipe(print_solution, solution=2)
         .pipe(print_df_head)
     )
