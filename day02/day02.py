@@ -49,10 +49,9 @@ def policy_2(df):
 
 
 def print_df_head(df):
-    print()
-    print(df.head().iloc[:, 0:5])
-    print(df.head().iloc[:, 5:])
-    return df
+    print("--------------------------------")
+    print(df.head().loc[:, :"policy_max"])
+    print(df.head().loc[:, "valid_1":])
 
 
 if __name__ == "__main__":
@@ -64,5 +63,6 @@ if __name__ == "__main__":
         .pipe(print_solution, solution=1)
         .pipe(policy_2)
         .pipe(print_solution, solution=2)
-        .pipe(print_df_head)
     )
+
+    print_df_head(df)
