@@ -38,9 +38,7 @@ def apply_check_policy_2(row):
     first_valid = row["password"][first_index] == row["char"]
     second_valid = row["password"][second_index] == row["char"]
 
-    if first_valid & second_valid:
-        return False
-    if first_valid | second_valid:
+    if first_valid ^ second_valid:
         return True
     return False
 
