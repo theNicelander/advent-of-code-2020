@@ -6,49 +6,44 @@ def read_input(path: str) -> list:
         return f.read().splitlines()
 
 
-def is_tree(slope, x, y) -> bool:
-    if slope[y][x] == "#":
-        return True
-    return False
+class Slope:
+    def __init__(self, input_path):
+        self.slope = read_input(input_path)
+        self.slope_length = len(self.slope)
+        self.slope_width = len(self.slope[0])
 
+    def broaden_slope(self):
+        self.slope = [line + line for line in self.slope]
+        self.slope_width = len(self.slope[0])
 
-def broaden_slope(slope: list) -> list:
-    return [line + line for line in slope]
+    def is_tree(self, x, y) -> bool:
+        if self.slope[y][x] == "#":
+            return True
+        return False
 
+    def count_trees(self, move_right=3, move_down=1):
+        count = 0
+        x = move_right
+        y = move_down
 
-def count_trees(slope: list, move_right=3, move_down=1):
-    count = 0
-    current_x = move_right
-    current_y = move_down
-    slope_length = len(slope)
-    slope_width = len(slope[0])
+        while self.slope_length > y:
+            if x >= self.slope_width:
+                self.broaden_slope()
+            if self.is_tree(x, y):
+                count += 1
+            x += move_right
+            y += move_down
+        return count
 
-    while slope_length > current_y:
-        if current_x >= slope_width:
-            slope = broaden_slope(slope)
-            slope_width = len(slope[0])
-
-        if is_tree(slope, current_x, current_y):
-            count += 1
-        current_x += move_right
-        current_y += move_down
-
-    return count
-
-
-def traverse_multiple_slopes(slope) -> list:
-    to_traverse = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
-
-    tree_list = []
-    for right, down in to_traverse:
-        number_of_trees = count_trees(slope, right, down)
-        tree_list.append(number_of_trees)
-    return tree_list
+    def count_trees_multiple(self, to_traverse):
+        return [self.count_trees(right, down) for right, down in to_traverse]
 
 
 if __name__ == "__main__":
-    slope = read_input("input.txt")
-    print(f"Trees solution 1: {count_trees(slope)}")
+    slope = Slope("input.txt")
 
-    multiple_trees = traverse_multiple_slopes(slope)
-    print(f"Trees solution 2: {np.prod(multiple_trees)}")
+    print(f"Solution 1: {slope.count_trees()}")
+
+    to_traverse = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
+    multiple_paths = slope.count_trees_multiple(to_traverse)
+    print(f"Solution 2: {np.product(multiple_paths)}")
