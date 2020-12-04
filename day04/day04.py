@@ -1,34 +1,37 @@
 import pandas as pd
 
 
-def parse_input_to_df(path) -> pd.DataFrame:
-    raw_input = read_raw_input(path)
-    passport_strings: list = convert_to_single_string_per_passport(raw_input)
-    dictionaries = convert_passports_to_dictionaries(passport_strings)
-    return pd.DataFrame(dictionaries)
-
-
 def read_raw_input(path: str) -> list:
     with open(path) as f:
         return f.read().splitlines()
 
 
-def convert_to_single_string_per_passport(lines):
-    list_of_strings = [""]
-    for line in lines:
-        if line == "":
-            list_of_strings.append("")
-        list_of_strings[-1] = list_of_strings[-1] + " " + line
-    return list_of_strings
+class Passport:
+    def __init__(self, path):
+        self.raw = read_raw_input(path)
+        self.passport_strings = self._string_per_passport()
+        self.passport_dicts = self._strings_to_dicts()
 
+    def _string_per_passport(self):
+        list_of_strings = [""]
+        for line in self.raw:
+            if line == "":
+                list_of_strings.append("")
+            list_of_strings[-1] = list_of_strings[-1] + " " + line
+        return list_of_strings
 
-def convert_passports_to_dictionaries(data):
-    passports = [passport.split(" ") for passport in data]
-    passport_dicts = []
-    for passport in passports:
-        passport_dict = {str(entry[:3]): str(entry[4:]) for entry in passport if entry}
-        passport_dicts.append(passport_dict)
-    return passport_dicts
+    def _strings_to_dicts(self):
+        passports = [passport.split(" ") for passport in self.passport_strings]
+        passport_dicts = []
+        for passport in passports:
+            passport_dict = {
+                str(entry[:3]): str(entry[4:]) for entry in passport if entry
+            }
+            passport_dicts.append(passport_dict)
+        return passport_dicts
+
+    def to_dataframe(self):
+        return pd.DataFrame(self.passport_dicts)
 
 
 def apply_part_1_validation(df):
@@ -65,6 +68,6 @@ def apply_part_2_validation(df):
 if __name__ == "__main__":
     file = "input.txt"
 
-    df = parse_input_to_df(file)
+    df = Passport(file).to_dataframe()
 
     df.pipe(apply_part_1_validation).pipe(apply_part_2_validation)
