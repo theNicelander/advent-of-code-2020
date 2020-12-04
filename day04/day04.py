@@ -31,12 +31,6 @@ def convert_passports_to_dictionaries(data):
     return passport_dicts
 
 
-def apply_is_valid_passport(row):
-    if row["no_missing"] == 0:
-        return True
-    return False
-
-
 if __name__ == "__main__":
     file = "input.txt"
 
