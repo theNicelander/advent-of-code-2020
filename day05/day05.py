@@ -7,26 +7,24 @@ class Ticket:
     def __init__(self, ticket):
         self.rows = ticket[:7]
         self.seats = ticket[7:]
-        self.last_row = self.rows[-1]
-        self.last_seat = self.seats[-1]
 
         self.row_number = self._find_seat(127, self.rows, "B")
         self.seat_number = self._find_seat(7, self.seats, "R")
-        self.seat_id = (self.row_number * 8) + self.seat_number
 
     def _find_seat(self, upper, characters, upper_char):
         lower = 0
+        last_char = characters[-1]
         for char in characters:
             mid = np.mean([lower, upper])
             if char == upper_char:
                 lower = math.ceil(mid)
             else:
                 upper = math.floor(mid)
-        final = upper if characters[-1] == upper_char else lower
+        final = upper if last_char == upper_char else lower
         return final
 
     def get_seat_id(self):
-        return self.seat_id
+        return (self.row_number * 8) + self.seat_number
 
 
 def test_tickets():
