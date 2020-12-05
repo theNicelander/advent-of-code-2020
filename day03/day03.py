@@ -1,14 +1,11 @@
 import numpy as np
+from utils.files import read_data_into_list
 
-
-def read_input(path: str) -> list:
-    with open(path) as f:
-        return f.read().splitlines()
 
 
 class Slope:
     def __init__(self, input_path):
-        self.slope = read_input(input_path)
+        self.slope = read_data_into_list(input_path)
         self.slope_length = len(self.slope)
         self.slope_width = len(self.slope[0])
 

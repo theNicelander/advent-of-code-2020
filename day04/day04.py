@@ -1,14 +1,10 @@
 import pandas as pd
-
-
-def read_raw_input(path: str) -> list:
-    with open(path) as f:
-        return f.read().splitlines()
+from utils.files import read_data_into_list
 
 
 class Passport:
     def __init__(self, path):
-        self.raw = read_raw_input(path)
+        self.raw = read_data_into_list(path)
         self.passport_strings = self._string_per_passport()
         self.passport_dicts = self._strings_to_dicts()
 
