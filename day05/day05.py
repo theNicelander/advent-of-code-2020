@@ -37,6 +37,11 @@ def test_tickets():
     print("ALL TESTS PASSED")
 
 
+def find_missing(ticket_id_list):
+    range_list = range(ticket_id_list[0], ticket_id_list[-1])
+    return set(range_list).difference(ticket_id_list)
+
+
 if __name__ == "__main__":
     test_tickets()
 
@@ -44,3 +49,6 @@ if __name__ == "__main__":
 
     all_ticket_ids = [Ticket(ticket).get_seat_id() for ticket in data]
     print("Part 1: ", max(all_ticket_ids))
+
+    missing = find_missing(all_ticket_ids)
+    print("Part 2:", missing)
