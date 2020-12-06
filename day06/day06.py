@@ -3,17 +3,17 @@ def read_file(path):
         return f.read().split("\n\n")
 
 
-def sum_unique_answers(data: list) -> int:
-    data = [g.replace("\n", "") for g in data]
-    unique_answers = [len(set(group)) for group in data]
-    return sum(unique_answers)
+def sum_unique_answers(groups_with_newlines: list) -> int:
+    groups_without_newlines = [g.replace("\n", "") for g in groups_with_newlines]
+    unique_answers_in_groups = [len(set(g)) for g in groups_without_newlines]
+    return sum(unique_answers_in_groups)
 
 
 def sum_duplicate_answers(data):
     return sum([intersection_length(group) for group in data])
 
 
-def intersection_length(group) -> int:
+def intersection_length(group: str) -> int:
     intersect = "START"
     for subgroup in group.split("\n"):
         if intersect == "START":
