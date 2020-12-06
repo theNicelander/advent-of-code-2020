@@ -10,11 +10,10 @@ def sum_unique_answers(data: list) -> int:
 
 
 def sum_duplicate_answers(data):
-    number_of_intersections = [find_intersection_length(group) for group in data]
-    return sum(number_of_intersections)
+    return sum([intersection_length(group) for group in data])
 
 
-def find_intersection_length(group) -> int:
+def intersection_length(group) -> int:
     intersect = "START"
     for subgroup in group.split("\n"):
         if intersect == "START":
@@ -30,8 +29,8 @@ def test_part_2():
 
 
 if __name__ == "__main__":
-    data = read_file("input.txt")
     test_part_2()
 
+    data = read_file("input.txt")
     print("Part 1", sum_unique_answers(data))
     print("Part 2", sum_duplicate_answers(data))
