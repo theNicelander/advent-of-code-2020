@@ -10,17 +10,17 @@ def sum_unique_answers(data: list) -> int:
 
 
 def sum_duplicate_answers(data):
-    number_of_intersections = [len(find_intersections(group)) for group in data]
+    number_of_intersections = [find_intersection_length(group) for group in data]
     return sum(number_of_intersections)
 
 
-def find_intersections(group):
-    for index, subgroup in enumerate(group.split("\n")):
-        if index == 0:
-            intersection = set(subgroup)
-        else:
-            intersection = intersection.intersection(set(subgroup))
-    return intersection
+def find_intersection_length(group) -> int:
+    intersect = "START"
+    for subgroup in group.split("\n"):
+        if intersect == "START":
+            intersect = set(subgroup)
+        intersect = intersect.intersection(set(subgroup))
+    return len(intersect)
 
 
 def test_part_2():
