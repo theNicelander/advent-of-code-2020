@@ -14,17 +14,14 @@ def sum_duplicate_answers(data):
 
 
 def intersection_length(group: str) -> int:
-    """ Splits string by newline, then finds length of intersection
+    """Splits string by newline, then finds length of intersection
     Example:
         input: "abc\nbc"
         {b,c} is the intersection
         output: 2
     """
-    intersect = "START"
-    for subgroup in group.split("\n"):
-        if intersect == "START":
-            intersect = set(subgroup)
-        intersect = intersect.intersection(set(subgroup))
+    subgroup_list = group.split("\n")
+    intersect = set.intersection(*map(set, subgroup_list))
     return len(intersect)
 
 
