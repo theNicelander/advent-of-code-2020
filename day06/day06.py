@@ -20,9 +20,9 @@ def intersection_length(group: str) -> int:
         {b,c} is the intersection
         output: 2
     """
-    subgroup_list = group.split("\n")
-    intersect = set.intersection(*map(set, subgroup_list))
-    return len(intersect)
+    subgroups = map(set, group.split("\n"))
+    intersections = set.intersection(*subgroups)
+    return len(intersections)
 
 
 def test_part_2():
