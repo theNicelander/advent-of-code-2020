@@ -1,20 +1,11 @@
 import pandas as pd
-from utils.files import read_data_into_list
+from utils.files import read_groups_into_list
 
 
 class Passport:
     def __init__(self, path):
-        self.raw = read_data_into_list(path)
-        self.passport_strings = self._string_per_passport()
+        self.passport_strings = read_groups_into_list(path)
         self.passport_dicts = self._strings_to_dicts()
-
-    def _string_per_passport(self):
-        list_of_strings = [""]
-        for line in self.raw:
-            if line == "":
-                list_of_strings.append("")
-            list_of_strings[-1] = list_of_strings[-1] + " " + line
-        return list_of_strings
 
     def _strings_to_dicts(self):
         passports = [passport.split(" ") for passport in self.passport_strings]
